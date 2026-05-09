@@ -2,11 +2,12 @@
     tls /etc/certs/fullchain.pem /etc/certs/privkey.pem
 
     map {labels.2} {upstream} {
+        beszel 192.168.0.251:8090
+        homeassistant 192.168.0.251:8123
         immich 192.168.0.249:2283
+        jellyfin 192.168.0.249:8096
         pihole-primary 192.168.0.251:314
         pihole-secondary 192.168.0.249:314
-        homeassistant 192.168.0.251:8123
-        jellyfin 192.168.0.249:8096
         qbittorrent 192.168.0.251:8080
         default ""
     }
