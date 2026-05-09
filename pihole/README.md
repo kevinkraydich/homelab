@@ -6,7 +6,8 @@
 
 ### Environment variables
 
-1. Create `.env` with the following values
+Create `.env` with the following variables
+
 ```
-    PASSWORD=<UI password>
+    PASSWORD
 ```
