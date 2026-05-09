@@ -16,4 +16,5 @@ All services run via Docker compose
 | [Immich](/immich) | Photo and video management |
 | [Jellyfin](/jellyfin) | Media streaming |
 | [Pi-Hole](/pihole) | Ad blocker |
+| [WireGuard](/wireguard) | VPN |
 
