@@ -8,6 +8,7 @@ All services run via Docker compose
 
 | Service | Description |
 | ------- | ----------- |
+| [Audiobookshelf](/audiobookshelf) | Audiobook and podcast streaming |
 | [Beszel](/beszel) | Performance monitoring |
 | [Caddy](/caddy) | Reverse proxies |
 | [Gluetun and qBitTorrent](/torrent) | Torrenting |
