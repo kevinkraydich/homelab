@@ -1,6 +1,6 @@
 # Caddy
 
-[Caddy](https://caddyserver.com/docs) is a reverse proxy server.
+[Caddy](https://caddyserver.com) is a reverse proxy server.
 
 ## Additional Setup
 
