@@ -5,4 +5,14 @@
 .env
 
 # Service-specific data
+
+## Beszel
 /beszel/agent/beszel_agent_data/
+
+## Caddy
+/caddy/certs/
+
+## Jellyfin
+/jellyfin/cache/
+/jellyfin/config/
+
