@@ -11,17 +11,11 @@ cd hub
 docker compose up -d
 ```
 
-### Add systems
+### Add agent
 
 1. Log into Beszel UI
 2. Select `Add system`
 3. Fill in fields, copy generated `docker-compose.yml` and add system
-4. On system, copy and paste `docker-compose.yml`
-
-```
-cd agent
-vim docker-compose.yml
-<Paste contents and save>
-docker compose up -d
-```
+4. `vim .env` and paste, remove Docker settings, and reformat environment variables
+5. `docker compose up -d`
 
