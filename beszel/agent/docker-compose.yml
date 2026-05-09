@@ -1,14 +1,20 @@
 services:
   beszel-agent:
-    image: henrygd/beszel-agent
+    image: henrygd/beszel-agent:alpine
     container_name: beszel-agent
     restart: unless-stopped
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./beszel_agent_data:/var/lib/beszel-agent
-      # monitor other disks / partitions by mounting a folder in /extra-filesystems
-      # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
+      # monitor other disks/partitions by mounting a folder in /extra-filesystems
+      #- /.beszel:/extra-filesystems/sd__SD_Card:ro
+    devices:
+      # add devices for SMART data monitoring
+      #- /dev/sda
+    cap_add:
+      - SYS_RAWIO # required for SMART data
+      - SYS_ADMIN # required for NVMe SMART data
     environment:
       LISTEN: ${LISTEN}
       KEY: ${KEY}
