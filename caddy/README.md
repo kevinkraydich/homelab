@@ -2,7 +2,7 @@
 
 [Caddy](https://caddyserver.com) is a reverse proxy server.
 
-## Additional Setup
+## Additional setup
 
 ### Certificates
 

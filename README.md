@@ -6,5 +6,10 @@ My home lab setup
 
 All services run via Docker compose
 
-[Caddy](/caddy)
+| Service | Description |
+| ------- | ----------- |
+| [Caddy](/caddy) | Reverse proxy server |
+| [Home Assistant](/homeassistant) | Home automation |
+| [Pi-Hole](/pihole) | Ad blocker |
+| [Gluetun and qBitTorrent](/torrent) | Torrenting |
 
