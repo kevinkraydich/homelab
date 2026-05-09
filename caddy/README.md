@@ -4,5 +4,8 @@
 
 ## Additional Setup
 
-Copy certificates to `/certs`
+### Certificates
+
+1. `mkdir certs`
+2. Copy certificates to `/certs`
 
