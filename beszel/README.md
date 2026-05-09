@@ -19,3 +19,10 @@ docker compose up -d
 4. `cd agent && vim .env` and paste, remove Docker settings, and reformat environment variables
 5. `docker compose up -d`
 
+### More features
+
+[Adding additional disks](https://beszel.dev/guide/additional-disks)
+
+[S.M.A.R.T. monitoring](https://beszel.dev/guide/smart-data)
+
+
