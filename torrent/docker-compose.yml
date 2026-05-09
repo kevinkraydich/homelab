@@ -1,0 +1,37 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8080:8080     # qBitTorrent UI
+      - 6881:6881     # qBitTorrent P2P
+      - 6881:6881/udp # qBitTorrent P2P
+    volumes:
+      - /config:/gluetun
+    env_file: .env
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+    env_file: .env
+    volumes:
+      - ./config:/config
+      - ${DOWNLOADS_PATH}:/downloads # optional
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      start_period: 30s
+      interval: 60s
+      timeout: 5s
+    depends_on:
+      gluetun:
+        condition: service_started
