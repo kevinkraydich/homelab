@@ -16,6 +16,6 @@ docker compose up -d
 1. Log into Beszel UI
 2. Select `Add system`
 3. Fill in fields, copy generated `docker-compose.yml` and add system
-4. `vim .env` and paste, remove Docker settings, and reformat environment variables
+4. `cd agent && vim .env` and paste, remove Docker settings, and reformat environment variables
 5. `docker compose up -d`
 
