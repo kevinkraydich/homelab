@@ -3,3 +3,6 @@
 
 # Environment variables
 .env
+
+# Service-specific data
+/beszel/agent/beszel_agent_data/

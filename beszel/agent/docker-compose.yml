@@ -9,4 +9,8 @@ services:
       - ./beszel_agent_data:/var/lib/beszel-agent
       # monitor other disks / partitions by mounting a folder in /extra-filesystems
       # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
-
+    environment:
+      LISTEN: ${LISTEN}
+      KEY: ${KEY}
+      TOKEN: ${TOKEN}
+      HUB_URL: ${HUB_URL}
