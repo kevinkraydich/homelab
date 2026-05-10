@@ -9,6 +9,7 @@
         pihole-primary 192.168.0.251:314
         pihole-secondary 192.168.0.249:314
         qbittorrent 192.168.0.251:8080
+        wireguard 192.168.0.251:51821
         default ""
     }
 
