@@ -6,8 +6,13 @@
 
 # Service-specific data
 
+## Audiobookshelf
+/audiobookshelf/config/
+/audiobookshelf/metadata/
+
 ## Beszel
 /beszel/agent/beszel_agent_data/
+/beszel/hub/beszel_data/
 
 ## Caddy
 /caddy/certs/
@@ -15,4 +20,16 @@
 ## Jellyfin
 /jellyfin/cache/
 /jellyfin/config/
+
+## Home Assistant
+/homeassistant/config/
+
+## Pi-Hole
+/pihole/etc/
+
+## Torrent
+/torrent/config/
+
+## WireGuard
+/wireguard/etc/
 
