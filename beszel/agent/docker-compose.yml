@@ -15,6 +15,9 @@ services:
     cap_add:
       - SYS_RAWIO # required for SMART data
       - SYS_ADMIN # required for NVMe SMART data
+    healthcheck:
+      test: ['CMD', '/agent', 'health']
+      interval: 120s
     environment:
       LISTEN: ${LISTEN}
       KEY: ${KEY}
