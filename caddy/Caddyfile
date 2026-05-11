@@ -1,20 +1,21 @@
 *.kevinkraydi.ch {
-    tls /etc/certs/fullchain.pem /etc/certs/privkey.pem
+	tls /etc/certs/fullchain.pem /etc/certs/privkey.pem
 
-    map {labels.2} {upstream} {
-        beszel 192.168.0.251:8090
-        homeassistant 192.168.0.251:8123
-        immich 192.168.0.249:2283
-        jellyfin 192.168.0.249:8096
-        pihole-primary 192.168.0.251:314
-        pihole-secondary 192.168.0.249:314
-        qbittorrent 192.168.0.251:8080
-        wireguard 192.168.0.251:51821
-        default ""
-    }
+	map {labels.2} {upstream} {
+		beszel 192.168.0.251:8090
+		homeassistant 192.168.0.251:8123
+		immich 192.168.0.249:2283
+		jellyfin 192.168.0.249:8096
+		pihole-primary 192.168.0.251:314
+		pihole-secondary 192.168.0.250:314
+		pihole-tertiary 192.168.0.249:314
+		qbittorrent 192.168.0.251:8080
+		wireguard 192.168.0.251:51821
+		default ""
+	}
 
-    @matched expression {upstream} != ""
-    handle @matched {
-        reverse_proxy {upstream}
-    }
+	@matched expression {upstream} != ""
+	handle @matched {
+		reverse_proxy {upstream}
+	}
 }
