@@ -2,11 +2,11 @@ services:
   homeassistant:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
     volumes:
       - ./config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    restart: unless-stopped
     privileged: true
     network_mode: host
     cap_add:
