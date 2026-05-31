@@ -8,9 +8,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./beszel_agent_data:/var/lib/beszel-agent
       # monitor other disks/partitions by mounting a folder in /extra-filesystems
-      #- /.beszel:/extra-filesystems/sd__SD_Card:ro
-    devices:
-      # add devices for SMART data monitoring
+    # add devices for SMART data monitoring
+    #devices:
       #- /dev/sda
     cap_add:
       - SYS_RAWIO # required for SMART data
