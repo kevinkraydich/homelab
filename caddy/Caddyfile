@@ -10,7 +10,9 @@
 		pihole-secondary 192.168.0.250:314
 		pihole-tertiary 192.168.0.249:314
 		qbittorrent 192.168.0.251:8080
+		seerr 192.168.0.249:5055
 		wireguard 192.168.0.251:51821
+		vpn 192.168.0.251:51820
 		default ""
 	}
 

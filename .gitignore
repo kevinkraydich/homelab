@@ -36,3 +36,5 @@
 ## WireGuard
 /wireguard/etc/
 
+## Seerr
+/seerr/config
