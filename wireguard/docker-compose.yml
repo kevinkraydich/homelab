@@ -1,11 +1,12 @@
 services:
   wg-easy:
+    container_name: wireguard
+    image: ghcr.io/wg-easy/wg-easy:15
+    restart: unless-stopped
     environment:
       - PORT=51821
       - HOST=0.0.0.0
       - INSECURE=false
-    image: ghcr.io/wg-easy/wg-easy:15
-    container_name: wireguard
     networks:
       wg:
         ipv4_address: 10.42.42.42
@@ -16,7 +17,6 @@ services:
     ports:
       - "51820:51820/udp"
       - "51821:51821/tcp"
-    restart: unless-stopped
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
