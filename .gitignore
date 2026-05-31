@@ -11,6 +11,7 @@
 /audiobookshelf/metadata/
 
 ## Beszel
+/beszel/agent/docker-compose.yml
 /beszel/agent/beszel_agent_data/
 /beszel/hub/beszel_data/
 
