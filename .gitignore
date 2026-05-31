@@ -24,6 +24,9 @@
 ## Home Assistant
 /homeassistant/config/
 
+## Immich
+/immich/server/postgres/
+
 ## Pi-Hole
 /pihole/etc/
 
