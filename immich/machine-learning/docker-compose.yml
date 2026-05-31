@@ -1,10 +1,10 @@
 services:
   immich-machine-learning:
-    container_name: immich_machine_learning
+    container_name: immich-machine-learning
     # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
     # Example tag: ${IMMICH_VERSION:-release}-cuda
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}-openvino
-    restart: always
+    restart: unless-stopped
     ports:
       - 3003:3003
     extends:
