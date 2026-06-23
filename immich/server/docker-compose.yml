@@ -3,6 +3,7 @@ services:
     container_name: immich-server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     restart: unless-stopped
+    user: "1000:1000"
     volumes:
       - type: bind
         source: ${HDD_PATH}/photos
@@ -10,7 +11,7 @@ services:
         read_only: true
         volume:
           subpath: gaming
-      - ${HDD_PATH}/immich:/data
+      - ${SSD_PATH}/immich:/data
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
