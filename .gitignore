@@ -26,6 +26,7 @@
 /homeassistant/config/
 
 ## Immich
+/immich/server/immich/
 /immich/server/postgres/
 
 ## Pi-Hole
