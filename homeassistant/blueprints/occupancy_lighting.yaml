@@ -1,0 +1,132 @@
+blueprint:
+  name: Occupancy lighting
+  description: >
+    Turn a room's lights (or a scene) on when it becomes occupied and off
+    when it clears. Optionally only after dark, within a time window, at a
+    set brightness, and with a clear-delay before turning off.
+  domain: automation
+  input:
+    occupancy_sensor:
+      name: Occupancy / motion sensor
+      selector:
+        entity:
+          filter:
+            domain: binary_sensor
+            device_class:
+              - occupancy
+              - motion
+    light_target:
+      name: Lights
+      description: Ignored if scenes are set below.
+      default: {}
+      selector:
+        target:
+          entity:
+            domain: light
+    scene_on:
+      name: Scene when occupied (optional, used instead of Lights)
+      default: ""
+      selector:
+        entity:
+          filter:
+            domain: scene
+    scene_off:
+      name: Scene when cleared (optional)
+      default: ""
+      selector:
+        entity:
+          filter:
+            domain: scene
+    brightness_pct:
+      name: Brightness % (0 = don't set)
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+    only_when_dark:
+      name: Only turn on between sunset and sunrise
+      default: true
+      selector:
+        boolean:
+    earliest:
+      name: Not before
+      default: "00:00:00"
+      selector:
+        time:
+    latest:
+      name: Not after
+      default: "23:59:59"
+      selector:
+        time:
+    clear_delay:
+      name: Keep on after room clears
+      default:
+        hours: 0
+        minutes: 0
+        seconds: 0
+      selector:
+        duration:
+
+mode: restart
+
+variables:
+  only_when_dark: !input only_when_dark
+  brightness_pct: !input brightness_pct
+  scene_on: !input scene_on
+  scene_off: !input scene_off
+
+triggers:
+  - trigger: state
+    entity_id: !input occupancy_sensor
+    to: "on"
+    id: occupied
+  - trigger: state
+    entity_id: !input occupancy_sensor
+    to: "off"
+    for: !input clear_delay
+    id: cleared
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: occupied
+          - condition: template
+            value_template: >
+              {{ not only_when_dark or is_state('sun.sun', 'below_horizon') }}
+          - condition: time
+            after: !input earliest
+            before: !input latest
+        sequence:
+          - choose:
+              - conditions: "{{ scene_on != '' }}"
+                sequence:
+                  - action: scene.turn_on
+                    target:
+                      # Template, not !input: HA validates every branch at setup
+                      # time, and the '' default fails entity_id validation.
+                      entity_id: "{{ scene_on }}"
+              - conditions: "{{ brightness_pct | int > 0 }}"
+                sequence:
+                  - action: light.turn_on
+                    target: !input light_target
+                    data:
+                      brightness_pct: !input brightness_pct
+            default:
+              - action: light.turn_on
+                target: !input light_target
+      - conditions:
+          - condition: trigger
+            id: cleared
+        sequence:
+          - choose:
+              - conditions: "{{ scene_off != '' }}"
+                sequence:
+                  - action: scene.turn_on
+                    target:
+                      entity_id: "{{ scene_off }}"
+            default:
+              - action: light.turn_off
+                target: !input light_target

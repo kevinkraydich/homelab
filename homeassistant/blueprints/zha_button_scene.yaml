@@ -1,0 +1,63 @@
+blueprint:
+  name: ZHA button → scene
+  description: >
+    Activate a scene when a button on a ZHA remote is pressed, with an
+    optional transition and optional follow-up actions.
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      selector:
+        device:
+          filter:
+            integration: zha
+    press_type:
+      name: Press type
+      default: remote_button_short_press
+      selector:
+        select:
+          custom_value: true
+          options:
+            - remote_button_short_press
+            - remote_button_double_press
+            - remote_button_long_release
+    button:
+      name: Button (trigger subtype, e.g. button_1, turn_on, dim_up)
+      selector:
+        text:
+    scene:
+      name: Scene
+      selector:
+        entity:
+          filter:
+            domain: scene
+    transition:
+      name: Transition (seconds)
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 60
+          unit_of_measurement: s
+    extra_actions:
+      name: Extra actions (optional)
+      default: []
+      selector:
+        action:
+
+mode: single
+
+triggers:
+  - trigger: device
+    domain: zha
+    device_id: !input remote
+    type: !input press_type
+    subtype: !input button
+
+actions:
+  - action: scene.turn_on
+    target:
+      entity_id: !input scene
+    data:
+      transition: !input transition
+  - sequence: !input extra_actions

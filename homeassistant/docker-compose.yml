@@ -6,6 +6,7 @@ services:
     volumes:
       - ./config:/config
       - /etc/localtime:/etc/localtime:ro
+      - ./blueprints:/config/blueprints/automation/homelab
       - /run/dbus:/run/dbus:ro
     privileged: true
     network_mode: host

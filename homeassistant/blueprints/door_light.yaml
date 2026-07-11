@@ -1,0 +1,99 @@
+blueprint:
+  name: Door light
+  description: >
+    Turn a light on when a door opens (optionally only after dark). Turn it
+    off either a fixed time after opening, or after the door has stayed
+    closed for a while. Set either duration to 0 to disable that off path.
+  domain: automation
+  input:
+    door_sensor:
+      name: Door sensor(s)
+      selector:
+        entity:
+          multiple: true
+          filter:
+            domain: binary_sensor
+            device_class:
+              - door
+              - garage_door
+              - opening
+    light_target:
+      name: Light
+      selector:
+        target:
+          entity:
+            domain: light
+    only_when_dark:
+      name: Only after dark
+      default: true
+      selector:
+        boolean:
+    off_after_open:
+      name: Turn off this long after opening (0 = disabled)
+      default:
+        hours: 0
+        minutes: 0
+        seconds: 0
+      selector:
+        duration:
+    off_after_close:
+      name: Turn off after the door has been closed this long (0 = disabled)
+      default:
+        hours: 0
+        minutes: 10
+        seconds: 0
+      selector:
+        duration:
+
+# single (not restart): the off-after-open delay must survive the door
+# closing or reopening mid-countdown.
+mode: single
+
+variables:
+  only_when_dark: !input only_when_dark
+  off_after_open: !input off_after_open
+  off_after_close: !input off_after_close
+
+triggers:
+  - trigger: state
+    entity_id: !input door_sensor
+    to: "on"
+    id: opened
+  - trigger: state
+    entity_id: !input door_sensor
+    to: "off"
+    for: !input off_after_close
+    id: closed
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: opened
+          - condition: template
+            value_template: >
+              {{ not only_when_dark or is_state('sun.sun', 'below_horizon') }}
+        sequence:
+          - action: light.turn_on
+            target: !input light_target
+          - if:
+              - condition: template
+                value_template: >
+                  {{ (off_after_open.hours | default(0)) | int * 3600
+                     + (off_after_open.minutes | default(0)) | int * 60
+                     + (off_after_open.seconds | default(0)) | int > 0 }}
+            then:
+              - delay: !input off_after_open
+              - action: light.turn_off
+                target: !input light_target
+      - conditions:
+          - condition: trigger
+            id: closed
+          - condition: template
+            value_template: >
+              {{ (off_after_close.hours | default(0)) | int * 3600
+                 + (off_after_close.minutes | default(0)) | int * 60
+                 + (off_after_close.seconds | default(0)) | int > 0 }}
+        sequence:
+          - action: light.turn_off
+            target: !input light_target

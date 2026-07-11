@@ -1,0 +1,88 @@
+blueprint:
+  name: Sun schedule light
+  description: >
+    Turn lights on at sunset and off at sunrise, with optional extra fixed
+    times (e.g. also on at 05:00, also off at 01:00).
+  domain: automation
+  input:
+    lights:
+      name: Lights
+      selector:
+        target:
+          entity:
+            domain: light
+    use_on_time:
+      name: Also turn on at a fixed time
+      default: false
+      selector:
+        boolean:
+    on_time:
+      name: Fixed on time
+      default: "05:00:00"
+      selector:
+        time:
+    use_off_time:
+      name: Also turn off at a fixed time
+      default: false
+      selector:
+        boolean:
+    off_time:
+      name: Fixed off time
+      default: "01:00:00"
+      selector:
+        time:
+    extra_off_lights:
+      name: Extra lights/switches to turn off (but never on)
+      default: {}
+      selector:
+        target:
+          entity:
+            domain:
+              - light
+              - switch
+
+mode: single
+
+variables:
+  use_on_time: !input use_on_time
+  use_off_time: !input use_off_time
+  extra_off_lights: !input extra_off_lights
+
+triggers:
+  - trigger: sun
+    event: sunset
+    id: sun_on
+  - trigger: time
+    at: !input on_time
+    id: time_on
+  - trigger: sun
+    event: sunrise
+    id: sun_off
+  - trigger: time
+    at: !input off_time
+    id: time_off
+
+actions:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ trigger.id == 'sun_on'
+                 or (trigger.id == 'time_on' and use_on_time) }}
+        sequence:
+          - action: light.turn_on
+            target: !input lights
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ trigger.id == 'sun_off'
+                 or (trigger.id == 'time_off' and use_off_time) }}
+        sequence:
+          - action: light.turn_off
+            target: !input lights
+          - if:
+              - condition: template
+                value_template: "{{ extra_off_lights | length > 0 }}"
+            then:
+              - action: homeassistant.turn_off
+                target: !input extra_off_lights

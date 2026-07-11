@@ -1,0 +1,59 @@
+blueprint:
+  name: Media lighting
+  description: >
+    Turn lights off when any of the media players starts playing, and turn
+    lights back on (after dark) when playback pauses, buffers, or goes idle.
+  domain: automation
+  input:
+    media_players:
+      name: Media players
+      selector:
+        entity:
+          multiple: true
+          filter:
+            domain: media_player
+    lights_off:
+      name: Lights to turn off when playing
+      selector:
+        target:
+          entity:
+            domain: light
+    lights_on:
+      name: Lights to turn on when paused (after dark)
+      selector:
+        target:
+          entity:
+            domain: light
+
+mode: restart
+
+triggers:
+  - trigger: state
+    entity_id: !input media_players
+    to: playing
+    id: playing
+  - trigger: state
+    entity_id: !input media_players
+    to:
+      - paused
+      - idle
+      - buffering
+    id: paused
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: playing
+        sequence:
+          - action: light.turn_off
+            target: !input lights_off
+      - conditions:
+          - condition: trigger
+            id: paused
+          - condition: sun
+            after: sunset
+            before: sunrise
+        sequence:
+          - action: light.turn_on
+            target: !input lights_on
