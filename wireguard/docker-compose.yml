@@ -13,6 +13,7 @@ services:
       - /lib/modules:/lib/modules:ro
     ports:
       - "${VPN_PORT}:${VPN_PORT}/udp"
+      # UI port kept published so Caddy on the other host can reach this instance
       - "${PORT}:${PORT}/tcp"
     cap_add:
       - NET_ADMIN

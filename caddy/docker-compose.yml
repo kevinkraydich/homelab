@@ -18,7 +18,16 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
+    networks:
+      - proxy
+    # Allows proxying to services running with network_mode: host
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
 
 volumes:
   caddy_data:
   caddy_config:
+
+networks:
+  proxy:
+    external: true

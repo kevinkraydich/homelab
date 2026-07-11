@@ -8,8 +8,8 @@ services:
       - LOG_LEVEL=debug
       - TZ=America/Detroit
       - PORT=5055 #optional
-    ports:
-      - 5055:5055
+    networks:
+      - proxy
     volumes:
       - ./config:/app/config
     healthcheck:
@@ -18,3 +18,7 @@ services:
       timeout: 3s
       interval: 15s
       retries: 3
+
+networks:
+  proxy:
+    external: true

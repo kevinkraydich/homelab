@@ -7,10 +7,11 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
-    ports:
-      - 8080:8080     # qBitTorrent UI
-      - 6881:6881     # qBitTorrent P2P
-      - 6881:6881/udp # qBitTorrent P2P
+    networks:
+      - proxy
+    environment:
+      # Allow inbound connections from the proxy network to the qBitTorrent UI
+      - FIREWALL_INPUT_PORTS=8080
     volumes:
       - /config:/gluetun
     env_file: .env
@@ -42,3 +43,7 @@ services:
     depends_on:
       gluetun:
         condition: service_healthy
+
+networks:
+  proxy:
+    external: true

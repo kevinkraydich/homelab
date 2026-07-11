@@ -8,10 +8,10 @@ services:
       # DNS Ports
       - "53:53/tcp"
       - "53:53/udp"
-      # HTTP Port
+      # HTTP Port (kept published so Caddy on the other host can reach this instance)
       - "314:80/tcp"
-      # HTTPS Port (FTL will generate a self-signed certificate)
-      #- "159:443/tcp"
+    networks:
+      - proxy
     environment:
       TZ: 'America/Detroit'
       FTLCONF_webserver_api_password: $PASSWORD
@@ -22,3 +22,7 @@ services:
       - NET_ADMIN
       - SYS_TIME
       - SYS_NICE
+
+networks:
+  proxy:
+    external: true

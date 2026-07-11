@@ -5,8 +5,8 @@ services:
     # Example tag: ${IMMICH_VERSION:-release}-cuda
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}-openvino
     restart: unless-stopped
-    ports:
-      - 3003:3003
+    networks:
+      - proxy
     extends:
       file: hwaccel.ml.yml
       # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
@@ -17,3 +17,7 @@ services:
     #- /dev/dri:/dev/dri
     #healthcheck:
     # disable: false
+
+networks:
+  proxy:
+    external: true

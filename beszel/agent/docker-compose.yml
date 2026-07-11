@@ -7,10 +7,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./beszel_agent_data:/var/lib/beszel-agent
-      # monitor other disks/partitions by mounting a folder in /extra-filesystems
-    # add devices for SMART data monitoring
-    #devices:
-      #- /dev/sda
+    devices:
+      - /dev/sda
+      - /dev/sdb
     cap_add:
       - SYS_RAWIO # required for SMART data
       - SYS_ADMIN # required for NVMe SMART data

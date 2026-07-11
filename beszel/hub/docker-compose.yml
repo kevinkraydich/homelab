@@ -5,11 +5,15 @@ services:
     restart: unless-stopped
     environment:
       - APP_URL=https://beszel.kevinkraydi.ch
-    ports:
-      - 8090:8090
+    networks:
+      - proxy
     healthcheck:
       test: ['CMD', '/beszel', 'health', '--url', 'http://localhost:8090']
       start_period: 5s
       interval: 120s
     volumes:
       - ./beszel_data:/beszel_data
+
+networks:
+  proxy:
+    external: true

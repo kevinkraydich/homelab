@@ -15,8 +15,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
-    ports:
-      - '2283:2283'
+    networks:
+      - default
+      - proxy
     devices:
       - /dev/dri:/dev/dri
     depends_on:
@@ -51,3 +52,7 @@ services:
 
 volumes:
   model-cache:
+
+networks:
+  proxy:
+    external: true

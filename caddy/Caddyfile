@@ -2,18 +2,18 @@
         tls /etc/certs/fullchain.pem /etc/certs/privkey.pem
 
         map {labels.2} {upstream} {
-                dns-primary 192.168.0.251:314       # PiHole (secondary)
-                dns-secondary 192.168.0.249:314     # PiHole (secondary)
-                home 192.168.0.249:8123             # Home Assistant
-                metrics 192.168.0.249:8090          # Beszel
-                photos 192.168.0.249:2283           # Immich
-                requests 192.168.0.249:5055         # Seerr
-                stream 192.168.0.249:8096           # Jellyfin
-                torrent 192.168.0.249:8080          # qBitTorrent
-                vpn 192.168.0.251:51820             # WireGuard VPN
-                vpn-backup 192.168.0.249:51820      # WireGuard VPN
-                vpn-ui 192.168.0.251:51822          # WireGuard UI
-                vpn-backup-ui 192.168.0.249:51822   # WireGuard UI
+                dns-primary 192.168.0.251:314            # PiHole (remote host)
+                dns-secondary pihole:80                  # PiHole
+                home host.docker.internal:8123           # Home Assistant (host network)
+                metrics beszel-hub:8090                  # Beszel
+                photos immich-server:2283                # Immich
+                requests seerr:5055                      # Seerr
+                stream host.docker.internal:8096         # Jellyfin (host network)
+                torrent gluetun:8080                     # qBitTorrent (via gluetun)
+                vpn 192.168.0.251:51820                  # WireGuard VPN (remote host)
+                vpn-backup 192.168.0.249:51820           # WireGuard VPN
+                vpn-ui 192.168.0.251:51822               # WireGuard UI (remote host)
+                vpn-backup-ui host.docker.internal:51822 # WireGuard UI (published port)
                 default ""
         }
 
