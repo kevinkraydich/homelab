@@ -5,9 +5,12 @@
                 dns-primary 192.168.0.251:314            # PiHole (remote host)
                 dns-secondary pihole:80                  # PiHole
                 home host.docker.internal:8123           # Home Assistant (host network)
+                indexes prowlarr:9696                    # Prowlarr
                 metrics beszel-hub:8090                  # Beszel
+                movies radarr:7878                       # Radarr
                 photos immich-server:2283                # Immich
                 requests seerr:5055                      # Seerr
+                shows sonarr:8989                        # Sonarr
                 stream host.docker.internal:8096         # Jellyfin (host network)
                 torrent gluetun:8080                     # qBitTorrent (via gluetun)
                 vpn 192.168.0.251:51820                  # WireGuard VPN (remote host)
