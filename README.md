@@ -8,6 +8,7 @@ All services run via Docker compose
 
 | Service | Description |
 | ------- | ----------- |
+| [\*arr stack](/arr) | Content management and indexing |
 | [Audiobookshelf](/audiobookshelf) | Audiobook and podcast streaming |
 | [Beszel](/beszel) | Performance monitoring |
 | [Caddy](/caddy) | Reverse proxies |
