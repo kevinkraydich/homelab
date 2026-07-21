@@ -4,6 +4,9 @@
 # Environment variables
 .env
 
+# Per-host Makefile stack exclusions
+.stackignore
+
 # Service-specific data
 
 ## Audiobookshelf

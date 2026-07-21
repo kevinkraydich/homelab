@@ -1,0 +1,15 @@
+# Per-host stack exclusions for the Makefile.
+# Copy this file to .stackignore and uncomment the stacks you do NOT want to
+# run on this host. One stack directory per line; blank lines and lines
+# starting with '#' are ignored.
+#
+# Matching is prefix-aware: listing a parent dir excludes all nested stacks,
+# e.g. "immich" skips immich/server, immich/kiosk and immich/machine-learning.
+#
+# Preview the effective list with:  make list
+
+# --- Example: a secondary host that serves no media ---
+# immich
+# jellyfin
+# torrent
+# arr
